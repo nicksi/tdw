@@ -30,7 +30,8 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="GPIOButtonInputProvider.cs" />
+    <Compile Include="ButtonHelper.cs" />
+    <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -38,6 +39,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ToDoEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Graphics">
@@ -58,5 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\small.tinyfnt" />
+    <None Include="Resources\ubuntu15c.tinyfnt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\corner.gif" />
   </ItemGroup>
 </Project>
