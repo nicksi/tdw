@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Microsoft.SPOT;
-using Microsoft.SPOT.Input;
+using Microsoft.SPOT.Hardware;
 using Microsoft.SPOT.Presentation;
 using Microsoft.SPOT.Presentation.Media;
 using System.Threading;
@@ -13,9 +13,6 @@ namespace tdw
         
         private static Bitmap screen {get; set;}
         public static Timer _updateClockTimer { get; set; }
-
-        private static Bitmap hrs = new Bitmap(Resources.GetBytes(Resources.BinaryResources.hours),
-                                        Bitmap.BitmapImageType.Gif);
 
         private static Bitmap MinuteCorners = new Bitmap(Resources.GetBytes(Resources.BinaryResources.corner),
                                         Bitmap.BitmapImageType.Gif);
@@ -32,6 +29,7 @@ namespace tdw
         {
             screen = new Bitmap(Bitmap.MaxWidth, Bitmap.MaxHeight);
 
+
             // display the time immediately
             currentTime = DateTime.Now;
 
@@ -39,33 +37,60 @@ namespace tdw
             tde.Add(new ToDoEvent { Type = ToDoEventTypes.EVENT_CALL, DueDate = currentTime.AddMinutes(10), Label = "Call mother"});
             tde.Add(new ToDoEvent { Type = ToDoEventTypes.EVENT_HATE, DueDate = currentTime.AddMinutes(80), Label = "Board meeting" });
             
-            UpdateTime();
+            UpdateTime(null);
 
-
-
+            TimeSpan dueTime = new TimeSpan(0, 0, 0, 59 - currentTime.Second, 1000 - currentTime.Millisecond); // start timer at beginning of next minute
+            //TimeSpan period = new TimeSpan(0, 0, 1, 0, 0); // update time every minute
+            TimeSpan period = new TimeSpan(0, 0, 0, 1, 0); // update time every 5 sec
             // set up timer to refresh time every minute
-            _updateClockTimer = new Timer( state => {
-                    Debug.Print("Tick");
+            _updateClockTimer = new Timer(UpdateTime, null, dueTime, period); // start our update timer
 
-                    //update our local time reference
-                    //Device.Time.CurrentTime = DateTime.Now; //just normal
-                    currentTime = currentTime.AddMinutes(1); //speedy time
-                    //Device.Time.CurrentTime = new DateTime(2011, 12, 16, 12, 4, 0, 0); //hard coded time
-
-                    //draw face
-                    UpdateTime();
-                }, null, 1, 1 * 1000); // start our minute timer
-
+            // go to sleep; time updates will happen automatically every minute
             Thread.Sleep(Timeout.Infinite);
         }
 
-        private static void UpdateTime()
+        private static Bitmap ReadHrs(int hour)
+        {
+            if (hour == 0)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._12hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 1)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._01hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 2)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._02hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 3)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._03hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 4)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._04hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 5)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._05hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 6)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._06hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 7)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._07hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 8)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._08hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 9)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._09hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 10)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._10hours), Bitmap.BitmapImageType.Gif);
+            else if (hour == 11)
+                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._11hours), Bitmap.BitmapImageType.Gif);
+            else
+                return new Bitmap(SCREEN_SIZE, SCREEN_SIZE);
+        }
+
+        static void UpdateTime(object state)
         {
            
             Debug.Print("Tick");
             
             // clear our display buffer
             screen.Clear();
+
+            //update our local time reference
+            //Device.Time.CurrentTime = DateTime.Now; //just normal
+            currentTime = currentTime.AddMinutes(1); //speedy time
+            //Device.Time.CurrentTime = new DateTime(2011, 12, 16, 12, 4, 0, 0); //hard coded time
 
             // Get current time
             //DateTime currentTime = DateTime.Now;
@@ -77,7 +102,7 @@ namespace tdw
 
             #region draw hours
             // use big spritesheet for now
-            screen.DrawImage(0, 0, hrs, 0, nowHour%12 * SCREEN_SIZE , SCREEN_SIZE, SCREEN_SIZE);
+            screen.DrawImage(0, 0, ReadHrs(nowHour%12), 0,  0, SCREEN_SIZE, SCREEN_SIZE);
             #endregion
 
             #region draw minutes
@@ -86,11 +111,12 @@ namespace tdw
 
             #region draw date
             Font bigFont = Resources.GetFont(Resources.FontResources.ubuntu15c);
-            PaintCentered(currentTime.ToString("dd MMM, ddd").ToUpper(), bigFont, Color.White, SCREEN_SIZE/4 + 2);
+            PaintCentered(currentTime.ToString("dd MMM, ddd").ToUpper(), bigFont, Color.White, SCREEN_SIZE/4 );
 
             #endregion
 
             #region draw todo
+            screen.DrawRectangle(Color.White, 1, 32, 48, 64, 48, 0, 0, Color.White, 0, 0, Color.White, 0, 0, 0);
             for (int i = 0; i < tde.Count; ++i)
             {
                 if (((ToDoEvent)tde[i]).DueDate > currentTime)
@@ -211,9 +237,9 @@ namespace tdw
             
             // let's try to draw in code
             // top row - right half
-            for (int i = 0; i < TICK_PER_SIDE / 2 && MinuteCounter < nowMinute; ++i)
+            for (int i = 0; i < TICK_PER_SIDE / 2 + 1 && MinuteCounter < nowMinute; ++i)
             {
-                DrawTick(SCREEN_SIZE / 2 - TICK_WIDTH / 2 + TICK_OFFSET + i * TICK_BOX_STEP, TICK_OFFSET, TICK_WIDTH, TICK_HEIGHT);
+                DrawTick(SCREEN_SIZE / 2 - TICK_WIDTH / 2 + i * TICK_BOX_STEP, TICK_OFFSET, TICK_WIDTH, TICK_HEIGHT);
                 ++MinuteCounter;
             }
             //// draw top right corner
@@ -254,7 +280,7 @@ namespace tdw
 
             for (int i = 0; i < TICK_PER_SIDE && MinuteCounter < nowMinute; ++i)
             {
-                DrawTick(SCREEN_SIZE - TICK_OFFSET - TICK_CORNER_SIZE - TICK_GAP - TICK_BOX_STEP - i * TICK_BOX_STEP, SCREEN_SIZE - TICK_OFFSET - TICK_HEIGHT, TICK_WIDTH, TICK_HEIGHT);
+                DrawTick(SCREEN_SIZE - TICK_OFFSET - TICK_CORNER_SIZE - TICK_BOX_STEP - i * TICK_BOX_STEP, SCREEN_SIZE - TICK_OFFSET - TICK_HEIGHT, TICK_WIDTH, TICK_HEIGHT);
                 ++MinuteCounter;
             }
 
@@ -275,7 +301,7 @@ namespace tdw
             // draw left side
             for (int i = 0; i < TICK_PER_SIDE && MinuteCounter < nowMinute; ++i)
             {
-                DrawTick(TICK_OFFSET, SCREEN_SIZE - TICK_OFFSET - TICK_CORNER_SIZE - TICK_GAP - TICK_BOX_STEP - i * TICK_BOX_STEP, TICK_HEIGHT, TICK_WIDTH);
+                DrawTick(TICK_OFFSET, SCREEN_SIZE - TICK_OFFSET - TICK_CORNER_SIZE - TICK_BOX_STEP - i * TICK_BOX_STEP, TICK_HEIGHT, TICK_WIDTH);
                 ++MinuteCounter;
             }
 

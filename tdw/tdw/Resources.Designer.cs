@@ -36,8 +36,19 @@ namespace tdw
         [System.SerializableAttribute()]
         internal enum BinaryResources : short
         {
-            hours = -13705,
+            _03hours = -27944,
+            _01hours = -25762,
+            _08hours = -18587,
+            _09hours = -17754,
+            _12hours = 4654,
+            _10hours = 7072,
+            _11hours = 8161,
             corner = 20297,
+            _07hours = 25300,
+            _04hours = 26393,
+            _05hours = 27482,
+            _02hours = 28319,
+            _06hours = 32411,
         }
         [System.SerializableAttribute()]
         internal enum FontResources : short

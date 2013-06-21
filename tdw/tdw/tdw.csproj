@@ -48,8 +48,6 @@
     </Reference>
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Microsoft.SPOT.TinyCore">
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -67,5 +65,41 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\corner.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\12hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\01hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\02hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\03hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\04hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\06hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\07hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\08hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\09hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\11hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\05hours.gif" />
   </ItemGroup>
 </Project>
