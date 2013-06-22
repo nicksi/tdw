@@ -118,9 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>resources\small.tinyfnt;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="corner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\corner.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
@@ -162,5 +159,23 @@
   </data>
   <data name="_11hours" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\11hours.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="todotypes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\todotypes.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="todotypes_inverted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\todotypes_inverted.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="ubuntu11c" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ubuntu11c.tinyfnt;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="ubuntu12c" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ubuntu12c.tinyfnt;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="ubuntu16c" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ubuntu16c.tinyfnt;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="ubuntu18c" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ubuntu18c.tinyfnt;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

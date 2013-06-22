@@ -36,6 +36,7 @@ namespace tdw
         [System.SerializableAttribute()]
         internal enum BinaryResources : short
         {
+            todotypes = -32514,
             _03hours = -27944,
             _01hours = -25762,
             _08hours = -18587,
@@ -48,12 +49,16 @@ namespace tdw
             _04hours = 26393,
             _05hours = 27482,
             _02hours = 28319,
+            todotypes_inverted = 30983,
             _06hours = 32411,
         }
         [System.SerializableAttribute()]
         internal enum FontResources : short
         {
-            small = 13070,
+            ubuntu18c = -15004,
+            ubuntu11c = -6229,
+            ubuntu12c = -287,
+            ubuntu16c = 23027,
             ubuntu15c = 30013,
         }
     }

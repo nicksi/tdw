@@ -31,6 +31,9 @@
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="ButtonHelper.cs" />
+    <Compile Include="Buttons.cs" />
+    <Compile Include="ButtonDirections.cs" />
+    <Compile Include="Painter.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,7 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\small.tinyfnt" />
+    <None Include="Resources\ubuntu11c.tinyfnt" />
+    <None Include="Resources\ubuntu12c.tinyfnt" />
     <None Include="Resources\ubuntu15c.tinyfnt" />
+    <None Include="Resources\ubuntu16c.tinyfnt" />
+    <None Include="Resources\ubuntu18c.tinyfnt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\hours.gif" />
@@ -101,5 +108,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\05hours.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\todotypes.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\todotypes_inverted.gif" />
   </ItemGroup>
 </Project>
