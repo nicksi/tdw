@@ -127,10 +127,11 @@ namespace tdw
             screen.DrawRectangle(Color.White, 1, 32, 48, 64, 48, 0, 0, Color.White, 0, 0, Color.White, 0, 0, 0);
             for (int i = 0; i < tde.Count; ++i)
             {
-                if (((ToDoEvent)tde[i]).DueDate > currentTime)
+                ToDoEvent td = (ToDoEvent)tde[i];
+                if (td.DueDate.AddMinutes(1) < currentTime)
+                    tde.RemoveAt(i);
+                else if (td.DueDate > currentTime)
                 {
-                    // if will be due in 15 minutes - draw in inverse colors
-                    ToDoEvent td = (ToDoEvent)tde[i];
                     td.DrawEvent(screen, currentTime);
                     break;
                 }

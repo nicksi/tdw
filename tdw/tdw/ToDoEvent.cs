@@ -37,7 +37,7 @@ namespace tdw
                 // setup timer
                 TimeSpan due = (DueDate.AddSeconds(-10) - currentTime);
                 TimeSpan period = new TimeSpan(0, 0, 1);
-                _timer = new Timer(ShowAlert, this, due, period);
+                //_timer = new Timer(ShowAlert, this, due, period);
             }
         }
 
@@ -46,19 +46,13 @@ namespace tdw
         {
             DateTime currentTime = DateTime.Now;
             // stop after 30 sec
-            if ( (currentTime - DueDate).Seconds >= 30)
+            if ( (currentTime - DueDate).Milliseconds >= 30 * 1000)
             {
                 _timer.Dispose();
             }
             else{
-
-                // blink event
-                _inverse = !_inverse;
-
                 Bitmap bitmap = new Bitmap(64,48);
-
                 ((ToDoEvent)tde).DrawEvent(bitmap, currentTime);
-
                 bitmap.Flush(32, 48, 64, 48);
 
                 // vibrate
@@ -86,14 +80,14 @@ namespace tdw
             // if inverse draw background and use inverted icons
             if (_inverse)
             {
-                bitmap.DrawRectangle(Color.White, 0, 0, 3, 64, 20, 0, 0, Color.White, 0, 0, Color.White, 64, 48, 0xFF);
+                bitmap.DrawRectangle(Color.White, 0, 0, 3, 64, 18, 0, 0, Color.White, 0, 0, Color.White, 64, 48, 0xFF);
                 todotypes = new Bitmap(Resources.GetBytes(Resources.BinaryResources.todotypes_inverted), Bitmap.BitmapImageType.Gif);
             }
             else
                 todotypes = new Bitmap(Resources.GetBytes(Resources.BinaryResources.todotypes), Bitmap.BitmapImageType.Gif);
 
             //// draw icon
-            bitmap.DrawImage(0, 4, todotypes, 0, Type.GetHashCode() * 16, 16, 16);
+            bitmap.DrawImage(0, 5, todotypes, 0, (int)Type * 16, 16, 16);
             
             if (ts.Days > 0)
 
@@ -102,7 +96,7 @@ namespace tdw
                     16,
                     0,
                     48,
-                    20,
+                    18,
                     Bitmap.DT_AlignmentCenter,
                     _inverse?Color.Black:Color.White,
                     timeFont
@@ -123,7 +117,7 @@ namespace tdw
 
             if (Label.Length > 0)
             {
-                bitmap.DrawTextInRect(Label, 0, 22, 64, 26, Bitmap.DT_WordWrap|Bitmap.DT_TruncateAtBottom, Color.White, smallFont);
+                bitmap.DrawTextInRect(Label, 0, 19, 64, 30, Bitmap.DT_WordWrap|Bitmap.DT_TruncateAtBottom, Color.White, smallFont);
             }
         }
 
@@ -136,9 +130,9 @@ namespace tdw
         {
             
             // decide if it is time to use inverted colors
-            if ((DueDate - time).Milliseconds < 15 * 1000f) // blink last 15 seconds
+            if ((DueDate - time).Ticks < 150000000f) // blink last 15 seconds
                 _inverse = !_inverse;
-            else if ((DueDate - time).Milliseconds < 15 * 60 * 1000f) // show in inverted colors for last 15 minutes
+            else if ((DueDate - time).Ticks < 60 * 150000000f) // show in inverted colors for last 15 minutes
                 _inverse = true;
             else
                 _inverse = false;
