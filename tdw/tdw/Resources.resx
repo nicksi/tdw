@@ -178,4 +178,76 @@
   <data name="ubuntu18c" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ubuntu18c.tinyfnt;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
+  <data name="_01hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\01hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_01hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\01hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_02hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\02hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_02hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\02hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_03hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\03hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_03hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\03hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_04hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\04hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_04hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\04hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_05hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\05hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_05hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\05hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_06hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\06hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_06hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\06hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_07hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\07hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_07hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\07hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_08hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\08hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_08hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\08hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_09hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\09hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_09hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\09hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_10hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\10hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_10hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\10hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_11hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\11hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_11hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\11hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_12hours_o" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\12hours_o.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="_12hours_o2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\12hours_o2.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
 </root>

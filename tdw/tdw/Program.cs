@@ -9,6 +9,13 @@ using Agent.Contrib.Hardware;
 
 namespace tdw
 {
+    enum TimeModes
+    { 
+        FILL = 0,
+        OUTLINE = 1,
+        OUTLINE_FILL = 2
+    }
+
     public class Program
     {
         
@@ -21,6 +28,8 @@ namespace tdw
         const int TICK_WIDTH = 4;
         const int TICK_HEIGHT = 7;
         const int BLINK_BEFORE = 15;
+
+        private static TimeModes TimeMode = TimeModes.FILL;
 
         private static ArrayList tde = new ArrayList();
         private static int ActiveTde = 0;
@@ -59,32 +68,97 @@ namespace tdw
 
         private static Bitmap ReadHrs(int hour)
         {
-            if (hour == 0)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._12hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 1)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._01hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 2)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._02hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 3)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._03hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 4)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._04hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 5)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._05hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 6)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._06hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 7)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._07hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 8)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._08hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 9)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._09hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 10)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._10hours), Bitmap.BitmapImageType.Gif);
-            else if (hour == 11)
-                return new Bitmap(Resources.GetBytes(Resources.BinaryResources._11hours), Bitmap.BitmapImageType.Gif);
-            else
-                return new Bitmap(SCREEN_SIZE, SCREEN_SIZE);
+            if (TimeMode == TimeModes.FILL)
+            {
+                if (hour == 0)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._12hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 1)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._01hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 2)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._02hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 3)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._03hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 4)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._04hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 5)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._05hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 6)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._06hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 7)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._07hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 8)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._08hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 9)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._09hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 10)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._10hours), Bitmap.BitmapImageType.Gif);
+                else if (hour == 11)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._11hours), Bitmap.BitmapImageType.Gif);
+                else
+                    return new Bitmap(SCREEN_SIZE, SCREEN_SIZE);
+            }
+            else if (TimeMode == TimeModes.OUTLINE)
+            {
+                if (hour == 0)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._12hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 1)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._01hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 2)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._02hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 3)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._03hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 4)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._04hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 5)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._05hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 6)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._06hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 7)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._07hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 8)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._08hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 9)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._09hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 10)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._10hours_o), Bitmap.BitmapImageType.Gif);
+                else if (hour == 11)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._11hours_o), Bitmap.BitmapImageType.Gif);
+                else
+                    return new Bitmap(SCREEN_SIZE, SCREEN_SIZE);
+
+            }
+            else if (TimeMode == TimeModes.OUTLINE_FILL)
+            {
+                if (hour == 0)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._12hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 1)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._01hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 2)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._02hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 3)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._03hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 4)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._04hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 5)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._05hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 6)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._06hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 7)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._07hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 8)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._08hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 9)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._09hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 10)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._10hours_o2), Bitmap.BitmapImageType.Gif);
+                else if (hour == 11)
+                    return new Bitmap(Resources.GetBytes(Resources.BinaryResources._11hours_o2), Bitmap.BitmapImageType.Gif);
+                else
+                    return new Bitmap(SCREEN_SIZE, SCREEN_SIZE);
+
+            }
+
+            return new Bitmap(SCREEN_SIZE, SCREEN_SIZE);
         }
 
         static void UpdateTime(object state)
@@ -207,16 +281,66 @@ namespace tdw
 
         private static void DrawTicks(int nowMinute)
         {
+            PointAndSize p;
 
-            
-            for (int i = 0; i <= nowMinute; ++i)
+            if (TimeMode == TimeModes.FILL)
             {
-                PointAndSize p = GetTickPosition(i);
-                if (i%5 == 0)
-                    //screen.DrawEllipse(Color.White, 1, p.X + p.WIDTH/2 , p.Y + p.HEIGHT/2, TICK_WIDTH / 2, TICK_WIDTH / 2, Color.Black, 0, 0, Color.Black, TICK_WIDTH, TICK_WIDTH, 0XFF);
-                    screen.DrawRectangle(Color.White, 1, p.X, p.Y, p.WIDTH, p.HEIGHT, 0, 0, Color.Black, p.X, p.Y, Color.Black, p.X + p.WIDTH, p.Y + p.HEIGHT, 0xFF);
-                else
-                    screen.DrawRectangle(Color.White, 0, p.X, p.Y, p.WIDTH, p.HEIGHT, 0, 0, Color.White, p.X, p.Y, Color.White, p.X + p.WIDTH, p.Y + p.HEIGHT, 0xFF);
+                for (int i = 0; i <= nowMinute; ++i)
+                {
+                    p = GetTickPosition(i);
+                    if (i % 5 == 0)
+                        //screen.DrawEllipse(Color.White, 1, p.X + p.WIDTH/2 , p.Y + p.HEIGHT/2, TICK_WIDTH / 2, TICK_WIDTH / 2, Color.Black, 0, 0, Color.Black, TICK_WIDTH, TICK_WIDTH, 0XFF);
+                        screen.DrawRectangle(Color.White, 1, p.X, p.Y, p.WIDTH, p.HEIGHT, 0, 0, Color.Black, p.X, p.Y, Color.Black, p.X + p.WIDTH, p.Y + p.HEIGHT, 0xFF);
+                    else
+                        screen.DrawRectangle(Color.White, 0, p.X, p.Y, p.WIDTH, p.HEIGHT, 0, 0, Color.White, p.X, p.Y, Color.White, p.X + p.WIDTH, p.Y + p.HEIGHT, 0xFF);
+                }
+            }
+            else if ( TimeMode == TimeModes.OUTLINE )
+            {
+                for (int i = 0; i < 60; ++i)
+                {
+                    p = GetTickPosition(i);
+                    if (i == nowMinute)
+                    {
+                        if (i % 5 == 0 )
+                            screen.DrawEllipse(Color.White, 0, p.X + p.WIDTH/2 , p.Y + p.HEIGHT/2, TICK_WIDTH / 2, TICK_WIDTH / 2, Color.White, 0, 0, Color.White, TICK_WIDTH, TICK_WIDTH, 0XFF);
+                    
+                        else
+                            screen.DrawRectangle(Color.White, 0, p.X, p.Y, p.WIDTH, p.HEIGHT, 0, 0, Color.White, p.X, p.Y, Color.White, p.X + p.WIDTH, p.Y + p.HEIGHT, 0xFF);
+                    }
+                    else
+                    {
+                        if (i % 5 == 0 )
+                            screen.DrawEllipse(Color.White, 1, p.X + p.WIDTH/2 , p.Y + p.HEIGHT/2, TICK_WIDTH / 2, TICK_WIDTH / 2, Color.Black, 0, 0, Color.Black, TICK_WIDTH, TICK_WIDTH, 0XFF);
+                    
+                        else
+                            screen.DrawRectangle(Color.White, 1, p.X, p.Y, p.WIDTH, p.HEIGHT, 0, 0, Color.Black, p.X, p.Y, Color.Black, p.X + p.WIDTH, p.Y + p.HEIGHT, 0xFF);
+                    }
+                }
+            }
+            else if ( TimeMode == TimeModes.OUTLINE_FILL )
+            {
+                for (int i = 0; i < 60; ++i)
+                {
+                    p = GetTickPosition(i);
+                    if (i <= nowMinute)
+                    {
+                        if (i % 5 == 0 )
+                            screen.DrawEllipse(Color.White, 0, p.X + p.WIDTH/2 , p.Y + p.HEIGHT/2, TICK_WIDTH / 2, TICK_WIDTH / 2, Color.White, 0, 0, Color.White, TICK_WIDTH, TICK_WIDTH, 0XFF);
+                    
+                        else
+                            screen.DrawRectangle(Color.White, 0, p.X, p.Y, p.WIDTH, p.HEIGHT, 0, 0, Color.White, p.X, p.Y, Color.White, p.X + p.WIDTH, p.Y + p.HEIGHT, 0xFF);
+                    }
+                    else
+                    {
+                        if (i % 5 == 0 )
+                            screen.DrawEllipse(Color.White, 1, p.X + p.WIDTH/2 , p.Y + p.HEIGHT/2, TICK_WIDTH / 2, TICK_WIDTH / 2, Color.Black, 0, 0, Color.Black, TICK_WIDTH, TICK_WIDTH, 0XFF);
+                    
+                        else
+                            screen.DrawRectangle(Color.White, 1, p.X, p.Y, p.WIDTH, p.HEIGHT, 0, 0, Color.Black, p.X, p.Y, Color.Black, p.X + p.WIDTH, p.Y + p.HEIGHT, 0xFF);
+                    }
+                }
+
             }
 
         }

@@ -115,4 +115,76 @@
   <ItemGroup>
     <None Include="Resources\todotypes_inverted.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\01hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\01hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\02hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\02hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\03hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\03hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\04hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\04hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\05hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\05hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\06hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\06hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\07hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\07hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\08hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\08hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\09hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\09hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\11hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\11hours_o2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\12hours_o.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\12hours_o2.gif" />
+  </ItemGroup>
 </Project>
