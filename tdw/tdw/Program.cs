@@ -23,7 +23,7 @@ namespace tdw
         const int BLINK_BEFORE = 15;
 
         private static ArrayList tde = new ArrayList();
-        private static int ActiveTde = -1;
+        private static int ActiveTde = 0;
         private static bool tick_fast = false;
 
         private static DateTime currentTime;
@@ -38,16 +38,15 @@ namespace tdw
             // display the time immediately
             currentTime = DateTime.Now;
 
-            // create funnyh events
-            tde.Add(new ToDoEvent(ToDoEventTypes.EVENT_CALL, currentTime.AddSeconds(80), "Call mother"));
-            tde.Add(new ToDoEvent(ToDoEventTypes.EVENT_HATE, currentTime.AddMinutes(80), "Board meeting" ));
+            // create fake events
+            tde.Add(new ToDoEvent(ToDoEventTypes.EVENT_CALL, currentTime.AddSeconds(80), "Call mom"));
+            tde.Add(new ToDoEvent(ToDoEventTypes.EVENT_HATE, currentTime.AddMinutes(80), "Boring meeting" ));
+            tde.Add(new ToDoEvent(ToDoEventTypes.EVENT_LOVE, currentTime.AddMinutes(80), "Dinner"));
             
             UpdateTime(null);
 
             TimeSpan dueTime = new TimeSpan(0, 0, 0, 59 - currentTime.Second, 1000 - currentTime.Millisecond); // start timer at beginning of next minute
             TimeSpan period = new TimeSpan(0, 0, 1, 0, 0); // update time every minute
-            //TimeSpan period = new TimeSpan(0, 0, 0, 15, 0); // update time every 5 sec
-            // set up timer to refresh time every minute
             _updateClockTimer = new Timer(UpdateTime, null, dueTime, period); // start our update timer
 
 
@@ -90,8 +89,12 @@ namespace tdw
 
         static void UpdateTime(object state)
         {
-           
+            DrawFace(true);
             Debug.Print("Tick");
+        }
+
+        static void DrawFace(bool SwitchToFirst)
+        {
             Painter painter = new Painter(screen);
             
             // clear our display buffer
@@ -106,8 +109,6 @@ namespace tdw
             int nowSecond = currentTime.Second;
             int nowMinute = currentTime.Minute;
             int nowHour = currentTime.Hour;
-
-            Debug.Print(nowMinute.ToString());
 
             #region draw hours
             // use big spritesheet for now
@@ -129,20 +130,17 @@ namespace tdw
             // if three are some events
             if (tde.Count > 0)
             {
-                // if we have no active event - choose the nearest one (always first cell in array list)
-                if (ActiveTde < 0)
-                {
-                    ActiveTde = 0;
-                }
 
                 ToDoEvent evt = (ToDoEvent)tde[ActiveTde];
-                evt.DrawEvent(screen, currentTime);
-
                 // if active evenet is overdue for more than 1 minute - remove from the list
-                if (evt.TotalSeconds(currentTime) < -60)
+                if (evt.TotalSeconds(currentTime) < -40)
                 {
-                    tde.Remove(ActiveTde);
-                    ActiveTde = -1;
+                    tde.RemoveAt(ActiveTde);
+                    ActiveTde = 0;
+
+                    if (tde.Count > 0)
+                        // draw next event
+                        ((ToDoEvent)tde[ActiveTde]).DrawEvent(screen, currentTime);
 
                     StopTicking();
                 }
@@ -150,31 +148,39 @@ namespace tdw
                 else if (ActiveTde != 0)
                 {
                     long interval = ((ToDoEvent)tde[0]).TotalSeconds(currentTime);
-                    if ( interval < 60 + BLINK_BEFORE ) 
-                    { 
-                        ActiveTde = 0;
+                    
+                    if (interval < 120)
+                    {
+                        if (SwitchToFirst) ActiveTde = 0; // do not switch events if Middle Button has been pressed
+                    }
+
+                    if (interval < 60 + BLINK_BEFORE)
+                    {
                         StartTicking((int)(interval - BLINK_BEFORE));
                     }
-                    else if ( interval < 120 )
-                    {
-                        ActiveTde = 0;
-                    }
+
+                    ((ToDoEvent)tde[ActiveTde]).DrawEvent(screen, currentTime);
                 }
                 // if current event is the first one - check if it is time to start ticking
                 else if (ActiveTde == 0)
                 {
                     long interval = ((ToDoEvent)tde[0]).TotalSeconds(currentTime);
-                    if ( interval < 60 + BLINK_BEFORE)
+                    if (interval < 60 + BLINK_BEFORE)
                     {
                         StartTicking((int)(interval - BLINK_BEFORE));
                     }
+                    ((ToDoEvent)tde[ActiveTde]).DrawEvent(screen, currentTime);
                 }
+            }
+            else
+            {
+                // no events - stop ticking just in case
+                StopTicking();
             }
             #endregion
 
 
             screen.Flush(); // flush the display buffer to the display
-            Debug.Print("Tack");
         }
 
         private static void StartTicking(int seconds)
@@ -242,10 +248,30 @@ namespace tdw
             return new PointAndSize(0, 0, 0, 0);
         }
 
-        private static void buttonHelper_OnButtonPress(Buttons button, InterruptPort port, ButtonDirection direction,
-                                        DateTime time)
+        private static void buttonHelper_OnButtonPress(Buttons button, InterruptPort port, ButtonDirection direction, DateTime time)
         {
-            Debug.Print("button: " + button.ToString() + " direction:" + direction.ToString());            
+            if (button == Buttons.MiddleRight && direction == ButtonDirection.Up)
+            {
+                if (!((ToDoEvent)tde[ActiveTde]).Blinking)
+                {
+                    // show next event
+                    ++ActiveTde;
+
+                    if (ActiveTde > tde.Count - 1)
+                        ActiveTde = 0;
+
+                    DrawFace(false);
+                }
+                else
+                { 
+                    // remove active event
+                    tde.RemoveAt(ActiveTde);
+                    ActiveTde = 0;
+                    StopTicking();
+                    DrawFace(false);
+                }
+            }
+
         }
 
     }

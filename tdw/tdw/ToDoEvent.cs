@@ -22,14 +22,14 @@ namespace tdw
         public DateTime DueDate { get; set; }
         public ToDoEventTypes Type { get; set; }
         public string Label { get; set; }
-        public bool Active { get; set; }
+        public bool Blinking { get; set; }
 
         public ToDoEvent(ToDoEventTypes type, DateTime dueDate, string label)
         {
             Type = type;
             DueDate = dueDate;
             Label = label;
-            Active = false;
+            Blinking = false;
         }
 
         
@@ -73,7 +73,7 @@ namespace tdw
                     _inverse?Color.Black:Color.White,
                     timeFont
                     );
-            else if ( ts.Days == 0 && ts.Minutes == 0 )
+            else if ( ts.Days == 0 && ts.Minutes <= 0 )
                 bitmap.DrawTextInRect(
                     "NOW!",
                     16,
@@ -114,7 +114,10 @@ namespace tdw
             
             // decide if it is time to use inverted colors
             if ((DueDate - time).Ticks < 150000000f) // blink last 15 seconds
+            {
                 _inverse = !_inverse;
+                Blinking = true;
+            }
             else if ((DueDate - time).Ticks < 60 * 150000000f) // show in inverted colors for last 15 minutes
                 _inverse = true;
             else
