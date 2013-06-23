@@ -17,50 +17,22 @@ namespace tdw
 
     class ToDoEvent
     {
-        private Timer _timer;
         private bool _inverse = false;
         
         public DateTime DueDate { get; set; }
         public ToDoEventTypes Type { get; set; }
         public string Label { get; set; }
+        public bool Active { get; set; }
 
         public ToDoEvent(ToDoEventTypes type, DateTime dueDate, string label)
         {
             Type = type;
             DueDate = dueDate;
             Label = label;
-
-            DateTime currentTime = DateTime.Now;
-            // warn 10 seconds before event
-            if ( currentTime < DueDate.AddSeconds(-10))
-            {
-                // setup timer
-                TimeSpan due = (DueDate.AddSeconds(-10) - currentTime);
-                TimeSpan period = new TimeSpan(0, 0, 1);
-                //_timer = new Timer(ShowAlert, this, due, period);
-            }
+            Active = false;
         }
 
         
-        private void ShowAlert(object tde)
-        {
-            DateTime currentTime = DateTime.Now;
-            // stop after 30 sec
-            if ( (currentTime - DueDate).Milliseconds >= 30 * 1000)
-            {
-                _timer.Dispose();
-            }
-            else{
-                Bitmap bitmap = new Bitmap(64,48);
-                ((ToDoEvent)tde).DrawEvent(bitmap, currentTime);
-                bitmap.Flush(32, 48, 64, 48);
-
-                // vibrate
-
-            }
-
-        }
-
         /// <summary>
         /// Draw event on 64 x 48 bitmap
         /// </summary>
@@ -99,6 +71,17 @@ namespace tdw
                     18,
                     Bitmap.DT_AlignmentCenter,
                     _inverse?Color.Black:Color.White,
+                    timeFont
+                    );
+            else if ( ts.Days == 0 && ts.Minutes == 0 )
+                bitmap.DrawTextInRect(
+                    "NOW!",
+                    16,
+                    0,
+                    48,
+                    20,
+                    Bitmap.DT_AlignmentCenter,
+                    _inverse ? Color.Black : Color.White,
                     timeFont
                     );
 
@@ -147,6 +130,15 @@ namespace tdw
             else
                 PaintEvent(bitmap, time);
 
+        }
+
+        /// <summary>
+        /// .NETMF TimeSPan has no Total Seconds property. I will calculate it here
+        /// </summary>
+        /// <returns></returns>
+        public long TotalSeconds(DateTime time)
+        {
+            return (DueDate - time).Ticks / 10000000; // 1 tick = 100 nanoseconds
         }
 
     }

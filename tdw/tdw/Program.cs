@@ -13,18 +13,20 @@ namespace tdw
     {
         
         private static Bitmap screen {get; set;}
-        public static Timer _updateClockTimer { get; set; }
+        private static Timer _updateClockTimer { get; set; }
 
         // set the following to true to outline screen in emulator
-        const bool DISPLAY_BORDER_BOX = true;
         const int SCREEN_SIZE = 128;
 
         const int TICK_WIDTH = 4;
         const int TICK_HEIGHT = 7;
+        const int BLINK_BEFORE = 15;
 
-        public static ArrayList tde = new ArrayList();
+        private static ArrayList tde = new ArrayList();
+        private static int ActiveTde = -1;
+        private static bool tick_fast = false;
 
-        public static DateTime currentTime;
+        private static DateTime currentTime;
 
         public event ButtonHelper.ButtonPress OnButtonPress;
         private static ButtonHelper buttonHelper;
@@ -37,14 +39,14 @@ namespace tdw
             currentTime = DateTime.Now;
 
             // create funnyh events
-            tde.Add(new ToDoEvent(ToDoEventTypes.EVENT_CALL, currentTime.AddMinutes(10), "Call mother"));
+            tde.Add(new ToDoEvent(ToDoEventTypes.EVENT_CALL, currentTime.AddSeconds(80), "Call mother"));
             tde.Add(new ToDoEvent(ToDoEventTypes.EVENT_HATE, currentTime.AddMinutes(80), "Board meeting" ));
             
             UpdateTime(null);
 
             TimeSpan dueTime = new TimeSpan(0, 0, 0, 59 - currentTime.Second, 1000 - currentTime.Millisecond); // start timer at beginning of next minute
-            //TimeSpan period = new TimeSpan(0, 0, 1, 0, 0); // update time every minute
-            TimeSpan period = new TimeSpan(0, 0, 0, 1, 0); // update time every 5 sec
+            TimeSpan period = new TimeSpan(0, 0, 1, 0, 0); // update time every minute
+            //TimeSpan period = new TimeSpan(0, 0, 0, 15, 0); // update time every 5 sec
             // set up timer to refresh time every minute
             _updateClockTimer = new Timer(UpdateTime, null, dueTime, period); // start our update timer
 
@@ -97,11 +99,10 @@ namespace tdw
 
             //update our local time reference
             //Device.Time.CurrentTime = DateTime.Now; //just normal
-            currentTime = currentTime.AddMinutes(1); //speedy time
-            //Device.Time.CurrentTime = new DateTime(2011, 12, 16, 12, 4, 0, 0); //hard coded time
+            //currentTime = currentTime.AddMinutes(1); //speedy time
 
             // Get current time
-            //DateTime currentTime = DateTime.Now;
+            currentTime = DateTime.Now;
             int nowSecond = currentTime.Second;
             int nowMinute = currentTime.Minute;
             int nowHour = currentTime.Hour;
@@ -110,7 +111,7 @@ namespace tdw
 
             #region draw hours
             // use big spritesheet for now
-            screen.DrawImage(0, 0, ReadHrs(nowHour%12), 0,  0, SCREEN_SIZE, SCREEN_SIZE);
+            screen.DrawImage(0, 0, ReadHrs(nowHour%12), 0,  0, screen.Width, screen.Height);
             #endregion
 
             #region draw minutes
@@ -124,32 +125,78 @@ namespace tdw
             #endregion
 
             #region draw todo
-            screen.DrawRectangle(Color.White, 1, 32, 48, 64, 48, 0, 0, Color.White, 0, 0, Color.White, 0, 0, 0);
-            for (int i = 0; i < tde.Count; ++i)
+            //screen.DrawRectangle(Color.White, 1, 32, 48, 64, 48, 0, 0, Color.White, 0, 0, Color.White, 0, 0, 0);
+            // if three are some events
+            if (tde.Count > 0)
             {
-                ToDoEvent td = (ToDoEvent)tde[i];
-                if (td.DueDate.AddMinutes(1) < currentTime)
-                    tde.RemoveAt(i);
-                else if (td.DueDate > currentTime)
+                // if we have no active event - choose the nearest one (always first cell in array list)
+                if (ActiveTde < 0)
                 {
-                    td.DrawEvent(screen, currentTime);
-                    break;
+                    ActiveTde = 0;
                 }
-            }
-            #endregion
 
+                ToDoEvent evt = (ToDoEvent)tde[ActiveTde];
+                evt.DrawEvent(screen, currentTime);
 
-            #region misc
-            // draw a border around the screen, if desired.
-            if (DISPLAY_BORDER_BOX)
-            {
-                screen.DrawRectangle(Color.White, 1, 0, 0, SCREEN_SIZE, SCREEN_SIZE, 0, 0, Color.White, 0, 0, Color.White, 0, 0, 0);
+                // if active evenet is overdue for more than 1 minute - remove from the list
+                if (evt.TotalSeconds(currentTime) < -60)
+                {
+                    tde.Remove(ActiveTde);
+                    ActiveTde = -1;
+
+                    StopTicking();
+                }
+                // else if Active  event is not the first one check if the first one is due next minutes and switch
+                else if (ActiveTde != 0)
+                {
+                    long interval = ((ToDoEvent)tde[0]).TotalSeconds(currentTime);
+                    if ( interval < 60 + BLINK_BEFORE ) 
+                    { 
+                        ActiveTde = 0;
+                        StartTicking((int)(interval - BLINK_BEFORE));
+                    }
+                    else if ( interval < 120 )
+                    {
+                        ActiveTde = 0;
+                    }
+                }
+                // if current event is the first one - check if it is time to start ticking
+                else if (ActiveTde == 0)
+                {
+                    long interval = ((ToDoEvent)tde[0]).TotalSeconds(currentTime);
+                    if ( interval < 60 + BLINK_BEFORE)
+                    {
+                        StartTicking((int)(interval - BLINK_BEFORE));
+                    }
+                }
             }
             #endregion
 
 
             screen.Flush(); // flush the display buffer to the display
             Debug.Print("Tack");
+        }
+
+        private static void StartTicking(int seconds)
+        {
+            if (!tick_fast)
+            {
+                // stop fast ticking after @seconds@
+                _updateClockTimer.Change(seconds, 1000);
+                tick_fast = true;
+            }
+        }
+
+        private static void StopTicking()
+        {
+            if (tick_fast)
+            {
+                // stop fast ticking
+                TimeSpan dueTime = new TimeSpan(0, 0, 0, 59 - currentTime.Second, 1000 - currentTime.Millisecond); // start timer at beginning of next minute
+                TimeSpan period = new TimeSpan(0, 0, 1, 0, 0); // update time every minute
+                _updateClockTimer.Change(dueTime, period);
+                tick_fast = false;
+            }
         }
 
         private static void DrawTicks(int nowMinute)
@@ -160,7 +207,8 @@ namespace tdw
             {
                 PointAndSize p = GetTickPosition(i);
                 if (i%5 == 0)
-                    screen.DrawEllipse(Color.White, 0, p.X + p.WIDTH/2 , p.Y + p.HEIGHT/2, TICK_WIDTH / 2, TICK_WIDTH / 2, Color.White, 0, 0, Color.White, TICK_WIDTH, TICK_WIDTH, 0XFF);
+                    //screen.DrawEllipse(Color.White, 1, p.X + p.WIDTH/2 , p.Y + p.HEIGHT/2, TICK_WIDTH / 2, TICK_WIDTH / 2, Color.Black, 0, 0, Color.Black, TICK_WIDTH, TICK_WIDTH, 0XFF);
+                    screen.DrawRectangle(Color.White, 1, p.X, p.Y, p.WIDTH, p.HEIGHT, 0, 0, Color.Black, p.X, p.Y, Color.Black, p.X + p.WIDTH, p.Y + p.HEIGHT, 0xFF);
                 else
                     screen.DrawRectangle(Color.White, 0, p.X, p.Y, p.WIDTH, p.HEIGHT, 0, 0, Color.White, p.X, p.Y, Color.White, p.X + p.WIDTH, p.Y + p.HEIGHT, 0xFF);
             }
